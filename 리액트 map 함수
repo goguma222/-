@@ -1,0 +1,29 @@
+**_ map _**
+
+- 목록 요소들을 반복처리 할때는 map함수를 이용한다.
+
+- 반복 컴포넌트에는 반드시 key, props를 전달해야 한다.
+
+- map함수는 실행한 결과를 가지고 새로운 배열을 만들 때 사용
+  array.map(callbackFunction(currenValue, index, array), thisArg)
+
+* currenValue: 현재값
+* index: 현재인덱스
+* array: 현재배열
+* thisArg: callbackFunction 내에서 this로 사용될 값
+
+** 필수로 알아야 할 것 **
+
+- filter
+- map
+- forEach
+
+**_ filter _**
+
+- 요소 개수만큼 반복하여 boolean을 이용한 새로운 list를 만듬
+  array.filter(callbackFunction(currenValue, index, array), thisArg)
+- 위와 동일
+
+**_ map과 filter의 차이점 _**
+
+- map은 기존에 있는 값을 가지고 값을 구하여(연산 등등) 결과 값을 반환하고, filter는 값이 true인 값들만 추려서 값을 반환함

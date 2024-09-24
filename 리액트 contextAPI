@@ -1,0 +1,116 @@
+**_ ContextAPI _**
+* 데이터를 전역으로 관리하자 ContextAPI or Redux
+
+React를 하다보면 여러 컴포넌트를 거쳐서 자료를 전달해야 하거나, 동시에 같은 자료를 사용해야 하는 경우가 생긴다.
+- Context는 리액트 컴포넌트 간에 어떠한 값을 공유 할 수 있게 해주는 기능이다.
+- 주로 Context는 전역(global)으로 필요한 값을 다룰 때 사용한다.
+
+
+* Props로만 데이터를 전달하는 것은 한계가 있다.
+
+* 이런 식으로 컴포넌트가 여러개 있을 때 예를 들어 G에서 변경된 값을 J로 가져가려면 Root를 거쳐 J로 돌아가야 한다.
+
+* Props를 통해 핸드링 함수를 자식 컴포넌트 (JS는 변수로 함수를 전달가능)로 전달해줘야 한다.
+이런 문제는 Context API 또는 Redux를 사용하여 공통(전역)으로 사용하는 데이터를 외부에서 편리하게 사용할 수 있다.
+- root
+-- A
+--- B
+--- C
+---- D
+---- E
+---- F
+----- G
+-- H
+--- I
+--- J
+
+
+**_ Context API 사용방법 _**
+
+* 구현순서
+1. ContextAPI는 Provider 아래에 있어야한다. 
+2. 필요한 변수를 선언한다.
+const 사용할이름 = createContext(초기값);
+3. 자식 컴포넌트에서는 Consumer를 이용해서 데이터를 받을 수 있다.
+4. 부모 컴포넌트에서는 Provider라는 속성을 사용해서 value값을 전달하거나 제어할 수 있다.
+
+- createContext() 훅
+- ContextAPI를 생성한다.
+const 사용할이름 = createContext(초기값);
+
+
+**_ provider와 consumer _** ( 하나의 문법이라고 보면 된다. )
+
+- Provider Component | 부모에서 사용 | Context의 변화를 하위 컴포넌트에 알린다.
+
+- Consumer Component | 자식에서 사용 | 부모 Component중 가장 가까운 Provider가 전달하는 데이터를 받아서 사용한다.
+
+- APP.js 가 부모 컴포넌트이기 때문에 Provider 로 감싼다.
+
+- 자식 ( 하위 ) 컴포넌트에는 Consumer 로 감싼다.
+
+
+
+**_ 외부에 ContextAPI을 선언하고 사용하고 싶은 컴포넌트에 사용하는 방법 _**
+
+1. ContextAPI 생성
+2. 예시 <ColorContext.Consumer></ColorContext.Consumer> 자식 컴포넌트에 태그를 묶고 그 안에 함수를 선언한다.
+3. 생성된 함수 첫 번째 매개변수에 부모 컴포넌트에서 만들어 놨던 초기값을 받을 수 있다.
+4. 초기값을 해당 컴포넌트에서 바로 사용할 수 있다.
+
+
+
+**_ App.js 안에서 Provider의 사용 _**
+- Context에 포함된 React 컴포넌트인 Provider는 context를 사용하는 컴포넌트들에게 context의 변화를 알리는 역할을 한다.
+
+- provider 컴포넌트는 value prop을 받아서 이 값을 하위에 있는 컴포넌트에게 전달한다.
+
+- Provider 하위에서 context를 사용하는 모든 컴포넌트는 Provider의 value prop가 바뀔 때마다 다시 렌더링 된다.
+
+
+
+**_ Provider와 Consumer를 독립적으로 분리하는 방법 _**
+- ContextAPI는 전역으로 사용할 값이기 때문에 파일을 독립적으로 분리해서 작성하도록 변경해야됨
+
+- 하위 컴포넌트에서 훅을 이용해서 더욱 편리하게 사용할 수 있다.
+
+* useContext() 훅
+- 컴포넌트에서 context API를 편하게 사용하는 훅이다.
+
+- 리턴은 객체이고 첫 번째 값은 상태값, 두번째 값을 정하는 setter를 가진 객체를 반환한다.
+
+* 사용방법
+- state, action 변수 하나씩 생성한다.
+const {state, action} = useContext(컨텍스틑API객체)
+
+* 구현순서
+1. ContextAPI2.js생성 (Provider재정의, Consumer를 외부로 export)
+2. App.js에서 Provider 감싸기
+3. A.js 훅으로 컨텍스트 사용하기
+
+
+
+**_ 총정리 _**
+- Consumer : 사용하는 곳에서 쓴다.
+- Provider : 값을 변환할 때 사용하는데 쓰인다.
+- Provider : 하위 컴포넌트에 전달할 props값을 제공하는 역할을 한다. value속성에는 Consumer에서 제어할 값이 들어간다.
+
+- ColorComponent.js  ->  ContextAPI.js  ->  App.js 순서대로 만든다.
+
+- ColorComponent.js : 외부컴포넌트명.Consumer 안에 함수를 생성하고 첫 번째 매개변수에 초기값이 들어가서 그 함수에 보고싶은 내용을 리턴하면 된다.
+
+- ContextAPI.js : // 전역으로 사용할 컨텍스트 API 바꿀 값을 만든다.
+const ColorContext = createContext({color: '#f44'}); // 초기값
+그리고 export를 한다.
+
+- App.js : 출력한다. ( 아래와 같이 실행시킨다. )
+    <ColorContext.Provider value={ {color: '#0f0'} }>
+        <ColorComponent />
+	</ColorContext.Provider>
+
+
+
+
+**_ 마지막 총 정리 _**
+- Provider는 부모 컴포넌트에서 감싸준다.
+- Consumer는 자식 컴포넌트에서 감싸준다.

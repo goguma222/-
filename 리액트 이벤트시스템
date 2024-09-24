@@ -1,0 +1,30 @@
+// ** 이벤트 사용시 주의사항 **
+1. 이벤트 이름을 카멜표기법으로 작성한다. ( onClick, onKeyUp 등등 )
+2. 자바스크립트 코드 전달이 아니라, 리액트에서 함수 형태의 객체를 전달함
+3. DOM 요소에만 이벤트를 설정할 수 있다. ( div, button, form, span등등에만 이벤트를 설정할 수 있다. / 직접 만든 컴포넌트에는 이벤트를 자체적으로 설정할 수 없음 )
+
+*** 리액트에서 지원하는 이벤트 종류들 ***
+- Clipboard
+-- onCopy : 복사
+-- onCut : 잘라내기
+-- onPaste : 사용자가 클립보드에 콘텐츠 붙여넣기
+
+- Composition
+- Keyboard
+- Foucs
+- form
+- Mouse
+- Selection
+- Touch
+- UI
+- Wheel
+- Media
+- Image
+- Animation
+- Transition
+
+
+*** onChange 이벤트 ***
+- e.target.value 를 쓰면 인풋박스에 키보드를 입력할 때마다 값이 콘솔에 출력됨
+- 사용예시
+<input type="text" name="message" placeholder="바오패밀리중 아무나 이름을 입력해주세요." onChange={(e) => { console.log(e.target.value); }} />

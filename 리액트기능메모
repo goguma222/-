@@ -1,0 +1,137 @@
+*** 리액트 바벨이란? ***
+- 최신 자바스크립트 문법과 JSX( 리액트에서 사용되는 문법 )를 브라우저가 이해할 수 있는 구형 자바스크립트로 변환해주는 도구이다.
+
+*** JSX란? ***
+- 브라우저에서 실행되기 전에 번들링( 합쳐짐 )되는 과정에서 바벨을 사용하여 일반 자바스크립트 형태의 코드로 변환된다.
+
+- 자바스크립트 코드는 가독성이 떨어지고 JSX는 HTML코드를 작성하는 것이기에 가독성이 매우 좋다. ( 익숙하고, 친숙함 )
+
+- 닫아야 하는 태그가 있다. ( 무조건 닫아야 오류가 안뜸 )
+- 이러한 태그를 "self-closing"라고 부른다.
+- <input></input>
+
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+*** 전체 흐름 ( 위 코드 해석 ) *** 
+- 라이브러리와 컴포넌트 가져오기: react와 react-dom 라이브러리를 가져오고, App 컴포넌트를 가져옵니다.
+
+- 렌더링 설정: ReactDOM.render 메서드를 사용하여 App 컴포넌트를 렌더링합니다.
+
+- StrictMode 적용: App 컴포넌트를 React.StrictMode로 감싸서 개발 중에 잠재적인 문제를 감지합니다.
+
+- DOM 노드 지정: document.getElementById('root')를 사용하여 id가 root인 DOM 요소를 지정합니다.
+
+- 렌더링 실행: App 컴포넌트가 지정된 root DOM 요소에 렌더링됩니다.
+
+
+*** 리액트 js 사용방법 ***
+- name 값이 undefined일 때 보여주고 싶은 문구가 있을 때 return <div class="main">{name || "undefined"}</div> undefined가 렌더링됨
+
+- 인라인 스타일링
+- 스타일중에서 -(하이픈) 문자가 포함되는 이름은 카멜표기법( backgroundColor )로 작성해야한다.
+
+- 아래와 같이 사용하면 된다.
+- function Jang() {
+  const name = "리액트 맛보기"
+  const style = {
+    backgroundColor: "#232323",
+    color: "#fff",
+    fontSize: "48px",
+    fontWeight: "bold",
+    padding: "16" // 단위를 생략하면 px로 지정된다.
+  }
+  return <div class="wrap" style={style}>{name}</div>
+}
+
+- css파일에 className명에 스타일을 준다
+- import로 해당 css파일을 가져온다.
+- 그다음 js파일에서 아래와 같이 div태그에 className명에 react라는 명을 넣으면 스타일링이 된다 ( 코드가 짧아짐, 가독성 좋음 ) 
+
+import "./App.css";
+
+function Jang() {
+  const name = "리액트 맛보기"
+  return <div className="react">{name}</div>
+}
+
+
+
+*** JSX기능 ***
+- 주석방법
+- {/* 이렇게 주석달면 된다. */}
+
+
+- ESLint : 문법 검사 도구
+- 코드 작성할 때 실수를 하면 에러 혹은 경고 메시지를 VS Code 에디터에서 바로 확인할 수 있게 해준다.
+
+
+- Prettier : 코드 스타일 자동 정리 도구
+- fn + f1 를 누른 후 문서서식 클릭 후 포멧하면 "들여쓰기", "세미콜론" 등등 코드를 올바르게 고쳐준다.
+
+
+- .prettierrc ( src, public 각각 디렉토리에 파일 생성한다. / 아래 코드 넣기 )
+- {
+    "singleQuote": true, // true : 작은따옴표 (''), false : 큰따옴표 ("")
+    "semi": true, // true : 세미콜론 있음, false : 세미콜론 없음
+    "useTabs": true, // 들여쓰기에 탭 문자를 사용하도록 설정
+    "tabWidth": 2 // 탭 폭 : 2
+ }
+
+
+
+ *** 클래스형 컴포넌트 ***
+ import React, { Component } from 'react';
+
+// 클래스형 컴포넌트
+// - Counter 클래스는 Component 클래스 확장 (extends)하여 정의한다.
+// - extends Component 구문을 통해 리액트의 기능을 상속받아 사용할 수 있다.
+// - 사용방법 예시
+
+class Counter extends Component {
+	state = {
+		number: 1,
+		fixedNumber: 1,
+	};
+	render() {
+		const { number, fixedNumber } = this.state; // state를 조회할 때는 this.state로 조회한다.
+
+		return (
+			<div className="group">
+				<h1>{number}</h1>
+				<h2>{fixedNumber}</h2>
+				<button
+					onClick={() => {
+						this.setState((prevState) => {
+							return {
+								number: prevState.number + 1,
+							};
+						});
+					}}
+				>
+					+
+				</button>
+				<button
+					onClick={() => {
+						this.setState((prevState) => {
+							return {
+								number: prevState.number - 1,
+							};
+						});
+					}}
+				>
+					-
+				</button>
+			</div>
+		);
+	}
+}
+
+export default Counter;
+
+

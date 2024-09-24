@@ -1,0 +1,114 @@
+**_ SSR ( Server Side Rendering ) _**
+
+- Multi-Page Lifecycle
+  -- 1. Client
+  -- 2. Initial Request ( 최초요청 )
+  -- 3. Server
+  -- 4. Html
+  -- 5. Client
+  -- 6. Form POST
+  -- 7. Server
+  -- 8. Html ( 업데이트 )
+  -- 9. Client
+
+- SPA ( Single-Page-Application ) Lifecycle
+  -- 1. Client
+  -- 2. Initial Request ( 최초요청 )
+  -- 3. Server
+  -- 4. Client
+  -- 5. AJAX
+  -- 6. Server
+  -- 7. JSON
+  -- 8. Client
+
+- 1. SPA는 html파일을 브라우저 측에서 로드하고, 필요한 데이터는 API와 ajax통신을 이용해서 처리합니다.
+- 2. 브라우저에서 사용자가 상호작용 하면 필요한 부분만 업데이트 해서 처리합니다.
+- 3. 멀티플랫폼 Android, IOS에 대응하여 웹뷰로 처리하는 목적으로 사용된다.
+
+**_ SPA의 단점 _**
+- 앱의 규모가 커지면, JS파일도 너무 커져서 로딩이 오래걸리게 된다.
+- 브라우저에서 렌더링이 완료되기까지 비어있는 화면이 나오게 된다.
+- 그래서 규모가 큰 어플리케이션은 SSR( 서버사이드렌더링 ) 방식을 처리한다. ( 웹팩 설정 필요 )
+
+**_ 라우터란? _**
+- 라우터를 다운로드 했다면 각각의 페이지를 따로따로 사용할 수 있다.
+
+**_ 라우팅이란? _**
+- 브라우저의 주소상태에 따라 다양한 화면을 보여주도록 처리하는 것을 라우팅이라고 한다.
+
+**_ 사용이유 _**
+- create-react-app로 프로젝트를 생성하게 되면 기본적으로 SPA에 CSR( 클라이언트 렌더링 )이다.
+- 하나의 페이지만 사용하게 되는 것이다
+- SPA이지만 라우터를 활용해서 사용자로 하여금 여러 페이지가 존재하는 것처럼 느껴지게 할 수 있다.
+
+
+
+**_ 라우터 설치하고 프로젝트 시작하기 _** ( 꼭 외우기 ) ( 터미널에 작성하기 )
+1. 라우터를 적용할 프로젝트 생성
+1-1. npm create react-app 프로젝트명
+
+2. 라우터 설치
+2-1. npm install react-router-dom
+2-2. package.json 파일에서 react-router-dom이 있으면 설치가 된거고, 없으면 설치 x
+
+3. 프로젝트 시작
+3-1. npm start
+
+
+
+**_ 라우터 적용하기 _**
+1. 라우터를 사용할 때는 index.js에서 App컴포넌트를 <BrowserRouter>로 감싸준다.
+2. 페이지 컴포넌트 만들기
+3. App컴포넌트에서 <Routes>를 사용해서 분기하기
+4. 주소요청을 통해 확인하기
+
+**_ index.js 사용예시 _**
+
+function App () {
+import { BrowserRouter } from "react-router-dom";
+....
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+}
+
+export default App;
+
+
+**_ index.js 사용예시2 _** ( 꼭 외우기 )
+- Routes 속성안에 Route가 들어가는데 여기서 path는 url에 패스를 나타낸다.
+- https://self.hangcokorder.com/user/signin ( 예시 url )
+  -- protocal : "https"
+  -- Host : "self.hangcokorder.com"
+  -- path : "/user/signin"
+
+import { BrowserRouter } from "react-router-dom";
+....
+
+function App() {
+return (
+  <Routes>
+    ; path가 /이면 Home 컴포넌트를 보여준다.
+    <Route path='/' element={<Home/>} 
+    ; path가 /user이면 User컴포넌트를 보여준다.
+    <Route path='/user' element={<User/>} 
+    ; path가 /info이면 Info컴포넌트를 보여준다.
+    <Route path='/info' element={<Info/>}
+  </Routes>
+);
+}
+
+export default App;
+
+
+
+**_ Link를 이용행서 다른페이지로 이동방법 _**
+- link태그는 화면에 a태그로 생성된다.
+- to 속성에는 연결할 요청주소를 적는다.
+- 어느 컴포넌트든 사용할 수 있다.
+- href -> to 와 비슷한 개념 ( 패스 주소만 바뀜 )
+<link to='/user'>회원페이지</link> 

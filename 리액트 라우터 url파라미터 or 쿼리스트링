@@ -1,0 +1,41 @@
+**_ URL파라미터 or 쿼리스트링 _**
+
+- 쿼리스트링
+  -- 쿼리스트링은 주소의 ? 뒤에 키=값 의 형태로 넘어가는 매개값이다.
+  -- 별도의 라우터 설정은 하지 않아도 된다.
+  -- 컴포넌트에서 useLocation() 훅 or useSearchParams() 훅을 사용해서 쿼리스트링을 받을 수 있다.
+  -- 쿼리스트링 : /경로?키=값&키=값
+
+  **_ 링크에서 사용예시 _**
+
+  - useSearchParams()훅
+    -- 배열을 반환한다.
+    -- 첫 번째 요소는 쿼리파라미터를 조회하거나 수정하는 get, set이 담긴 객체
+    -- 두 번째 요소는 쿼리파라미터를 객체로 업데이트 하는 함수 반환
+
+  - useLocation() 방법
+    const location = useLocation();
+
+  - 사용방법 ( 이 방법이 쉽고 많이 쓰임 / 첫 번째는 사용할 수 있는 값 제공, 두 번째는 값을 수정할 수 있는 함수를 제공한다. )
+    <!-- const [객체, function] = useSearchParams(); -->
+    const [obj, setObj] = useSearchParams();
+    <!-- request.getParameter("키") let key = obj.get("key"); -->
+    let id = obj.get("id");
+
+- 위 내용 요약 ( 무조건 외우기 )
+  -- Link 태그에 "주소" 값을 넘기고 useLocation() or useSearchParams() 로 값을 받는다.
+  <!--
+      <ul>
+          <li>
+              <Link to='/user?id=aa123&key=1'>회원페이지( 쿼리파람 )</Link>
+          </li>
+      </ul>
+   -->
+
+  **_ url파라미터 _**
+
+- url파라미터는 주소 뒤에 /경로/값/값 의 형태로 넘어가는 매개값이다.
+- 라우터에 추가적인 설정이 필요하다 ( /주소/:키 )
+- 컴포넌트에서는 useParams() 훅을 사용하여 url파라미터를 받을 수 있다.
+
+**_ 라우터에서는... _**

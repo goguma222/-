@@ -1,0 +1,105 @@
+프로미스는 자바스크립트에 내장된 내장객체이다.
+프로미스 객체에서는 2가지 형태를 지닌다.
+
+1. 상태 ( state )
+- pending : 수행중
+- fullfilled : 성공적 완료
+- rejected : 실패
+
+
+2. 프로듀서 - 정보를 제공하는 제공자 ( 즉, Promise )
+컨슈머 - 사용자 ( 즉, 호출하는사람 )
+
+
+프로미스 생성
+- executor 콜백함수를 전달해야 하며 executor콜백함수는 다시 resolve함수와 reject함수를 받는다.
+
+; 매개변수는 컴슈머가 분명 콜백함수를 전달할거야! ( 그 콜백함수로 리턴해줄게! )
+let promise = new Promise( (success, fail) => {
+
+    ; producer 입장에서 성공했을 때 성공을 알리는 함수
+    success("success");
+
+    ; producer 입장에서 실패했을 때 실패를 알리는 함수
+    fail(new Error("fail"));
+
+})
+
+
+
+**_ async( 비동기 ), await( 기다려 ) 적용하기 _**
+
+; async, await 규칙
+1. 어싱크 함수 안에서 어웨잇을 사용한다.
+2. function 앞에 async 키워드를 추가 함수는 언제나 프라미스를 반환한다. ( 무조건 return이 프로미스 형태로 바뀐다. )
+3. 리턴이 프로미스라면 await을 적용하고 then절을 없앨 수 있다.
+
+비동기에서 3번의 데이터 통신을 한다고 가정합시다.
+1, 2, 3, 4, 5, 6의 순서로 출력될 것 같지만 아니다.
+수전수를 보장하지 않는다.
+
+
+; 순서를 보장받을 수 없는 코드 ( 이러한 식으로 코드를 짜면 1, 3, 5의 순서가 계속 달라짐 )
+const aaa = () => {
+
+    const handleClick = () => {
+        axios.get('https://raw.githubusercontent.com/yopy0817/data_example/master/hi.json')
+            .then( response => {
+                console.log(response.data);
+                console.log(1);
+            });
+            console.log(2);
+
+        axios.get('https://raw.githubusercontent.com/yopy0817/data_example/master/by.json')
+            .then( response => {
+                console.log(response.data);
+                console.log(3);
+            });
+            console.log(4);
+
+        axios.get('https://raw.githubusercontent.com/yopy0817/data_example/master/hello.json')
+            .then( response => {
+                console.log(response.data);
+                console.log(5);
+            });
+            console.log(6);
+
+    };
+}
+
+
+; 해결하려면 콜백함수를 써야한다. ( 콜백지옥 )
+const aaa = () => {
+
+    const handleClick = () => {
+        axios.get('https://raw.githubusercontent.com/yopy0817/data_example/master/hi.json')
+            .then( response => {
+                console.log(response.data);
+                console.log(1);
+
+                axios.get('https://raw.githubusercontent.com/yopy0817/data_example/master/by.json')
+            .then( response => {
+                console.log(response.data);
+                console.log(3);
+
+                axios.get('https://raw.githubusercontent.com/yopy0817/data_example/master/hello.json')
+            .then( response => {
+                console.log(response.data);
+                console.log(5);
+            });
+            });
+            });
+            console.log(2);
+            console.log(4);
+            console.log(6);
+
+    };
+}
+
+
+
+; async, await의 장점
+1. 코드의 간결성
+2. 어싱크, 어웨잇은 동기적방식 ( 순서를 ) 보장한다.
+
+; 이것만 외우면 된다. "async안에 await를 붙일 수 있고, 리턴이 프로미스면 어웨잇 붙일 수 있다."

@@ -1,0 +1,40 @@
+**_ 라우터의 부가적인 기능 _**
+
+- NavLink 컴포넌트
+  -- 링크에서 사용하는 경로가 라우터의 경로와 일치하면 특정스타일을 적용 ( 활성화 가능 )
+
+- useNavigate() 훅 vs Navigate 컴포넌트
+
+- useNavigate() 훅 ( history.go(-1) 대체함 )
+  -- JavaScript의 history 객체를 대신한다. ( history.go(-1) = 한페이지 뒤로 )
+  -- 이벤트에서 사용
+  -- 렌더링시에 사용 불가
+
+- Navigate 컴포넌트 ( location.href와 비슷함 )
+  -- 리다이렉트기능
+  -- 렌더링시에 사용
+  -- 처음 렌더링시에 사용 가능
+
+**_ NavLink 컴포넌트 _**
+
+- NavLink는 링크의 경로가 라우터의 경로와 일치하면 특정스타일을 적용해준다.
+- NavLink는 style속성을 제공한다.
+- style속성에는 실행시킬 함수를 작성한다.
+- 이 함수에 매개변수로 {isActive : boolean} 객체를 넣어주는데, 활성화 여부를 표시가 가능하다.
+- 사용은 반다시 {isActive} 변수로 구조분해할당 한다.
+
+**_ useNavigate훅 navigate 컴포넌트 _** ( Header.js에서 버튼에 사용 )
+
+- useNavigate 훅
+  -- useNavigate훅은 특정 event가 발생할 때, url을 조작할 수 있는 함수를 제공한다.
+  -- react v6에서 useHistory가 변화한 것이다 (JS의 history객체를 대신함)
+  -- let navigator = useNavigate();
+
+
+
+**_ 총정리 _**
+
+- 라우터 부가적인 기능 총 3개
+- NavLink태그 : 스타일을 적을 수 있는 속성 ( 굳이 사용할 필요성이 없을 경우 Link태그 쓰면됨 )
+- Navigate() 훅 : history 객체 대체하는 속성 ( 홈, 앞, 뒤로가기 버튼에 사용하면 됨 )
+- Navigate 컴포넌트 : 렌더링 과정에 권환이 없으면 접근하지 못하게 하기 위해 사용하는 속성 ( 리다이렉트를 대신한다. )
